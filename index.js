@@ -77,6 +77,8 @@ client.on('messageCreate', async (message) => {
 
         if(args.length===0) return
 
+        message.language = 'vi_VN'
+
         const cmd = args[0].toLowerCase()
         let executeCommand = cmd
         if(aliasesList.has(executeCommand)) {
