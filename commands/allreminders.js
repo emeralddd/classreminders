@@ -1,7 +1,7 @@
 const { Message } = require('discord.js')
 const bot = require('wheat-better-cmd')
-const Database = require("@replit/database")
-const db = new Database()
+// const Database = require("@replit/database")
+// const db = new Database()
 
 const help = {
     name:"allreminders",

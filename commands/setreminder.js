@@ -1,7 +1,7 @@
 const { Message, Permissions } = require('discord.js')
 const bot = require('wheat-better-cmd')
-const Database = require("@replit/database")
-const db = new Database()
+// const Database = require("@replit/database")
+// const db = new Database()
 const moment = require('moment')
 
 const help = {
@@ -15,7 +15,7 @@ const help = {
  */
 
 const run = async ({message,args}) => {
-     if(!message.member.permissions.has(Permissions.FLAGS.ADMINISTRATOR)&&!message.member.permissions.has(Permissions.FLAGS.MANAGE_GUILD)) {
+  if(!message.member.permissions.has(Permissions.FLAGS.ADMINISTRATOR)&&!message.member.permissions.has(Permissions.FLAGS.MANAGE_GUILD)) {
     await bot.wheatSendErrorMessage(message,`Không có đủ quyền để thực hiện!`)
     return
   }
@@ -25,6 +25,11 @@ const run = async ({message,args}) => {
   const time = moment(args[1]+" "+args[2],'HH:mm DD/MM/YYYY',true)
   if(!time.isValid()) {
     await bot.wheatSendErrorMessage(message,`Sai cấu trúc ngày giờ!`)
+    return
+  }
+
+  if(time.isBefore(new Date())) {
+    await bot.wheatSendErrorMessage(message,`Nhập một thời gian trong tương lai!`)
     return
   }
 
@@ -43,13 +48,13 @@ const run = async ({message,args}) => {
   const serverId = message.guild.id
   const memberId = message.member.id
   
-  await db.set(message.id, {
-    server:serverId,
-    author:memberId,
-    time:`${args[1]} mỗi ${days[time.day()]}`,
-    firstDate:time.valueOf(),
-    content:content
-  })
+  // await db.set(message.id, {
+  //   server:serverId,
+  //   author:memberId,
+  //   time:`${args[1]} mỗi ${days[time.day()]}`,
+  //   next:time.valueOf(),
+  //   content:content
+  // })
 
   const embed = await bot.wheatSampleEmbedGenerate()
 
