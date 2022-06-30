@@ -4,6 +4,8 @@ const { Collection, Client, Intents } = require('discord.js')
 require('dotenv').config()
 const express = require('express')
 const { readdirSync } = require('fs')
+const moment = require('moment-timezone')
+const checkReminder = require('./modules/checkReminder.js')
 
 const client = new Client({intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MEMBERS]})
 let commandsList = new Collection()
@@ -17,6 +19,14 @@ app.get('/', function (req, res) {
 })
 
 app.listen(8080)
+
+moment.tz.setDefault("Asia/Ho_Chi_Minh")
+
+const each10Second = async() => {
+  setInterval(async() => {
+    checkReminder(client)
+  },5000)
+}
 
 const addCommands = () => {
     const files = readdirSync(`./commands`)
@@ -53,6 +63,7 @@ initial()
 client.once('ready', () => {
     client.user.setActivity('WITH A CLOCK', {type:'PLAYING'})
     console.log(`Da dang nhap duoi ten ${client.user.tag}!`)
+    each10Second()
 })
 
 client.on('messageCreate', async (message) => {

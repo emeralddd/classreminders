@@ -1,7 +1,8 @@
 const { Message } = require('discord.js')
 const bot = require('wheat-better-cmd')
-// const Database = require("@replit/database")
-// const db = new Database()
+const Database = require("@replit/database")
+const db = new Database()
+const moment = require('moment')
 
 const help = {
     name:"allreminders",
@@ -22,7 +23,7 @@ const run = async ({message}) => {
   for(const i of lists) {
     const val = await db.get(i)
     if(val.server === serverId) 
-      embed.addField(`ID: ${i}`,`Tạo bởi: <@${val.author}>\nThời gian: ${val.time}\nNội dung: ${val.content}`)
+      embed.addField(`ID: ${i}`,`Tạo bởi: <@${val.author}>\nThời gian: ${val.time}\nNội dung: ${val.content}\nKênh gửi: <#${val.channel}>\n${message.member.id === '687301490238554160'?`Test: ${moment(val.next).format("DD MMM YYYY hh:mm")}`:``}`)
   }
 
   await bot.wheatEmbedSend(message,[embed])
