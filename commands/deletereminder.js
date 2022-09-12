@@ -1,7 +1,6 @@
 const { Message, Permissions } = require('discord.js')
 const bot = require('wheat-better-cmd')
-const Database = require("@replit/database")
-const db = new Database()
+const db = require('../models/reminder')
 
 const help = {
     name:"deletereminder",
@@ -24,13 +23,11 @@ const run = async ({message,args}) => {
     await bot.wheatSendErrorMessage(message,`Chưa nhập ID`)
     return
   }
-  const tmp = await db.get(args[1])
+  const tmp = await db.findOneAndDelete(args[1])
   if(!tmp) {
     await bot.wheatSendErrorMessage(message,`ID không tồn tại`)
     return
   }
-  
-  await db.delete(args[1])
 
   await bot.wheatSend(message,`**Đã xóa!**`)
 }

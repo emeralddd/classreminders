@@ -6,6 +6,7 @@ const express = require('express')
 const { readdirSync } = require('fs')
 const moment = require('moment-timezone')
 const checkReminder = require('./modules/checkReminder.js')
+const mongo = require('mongoose')
 
 const client = new Client({intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MEMBERS]})
 let commandsList = new Collection()
@@ -18,7 +19,7 @@ app.get('/', function (req, res) {
     res.send('Hello World')
 })
 
-app.listen(8080)
+app.listen(8081)
 
 moment.tz.setDefault("Asia/Ho_Chi_Minh")
 
@@ -48,10 +49,27 @@ const addCommands = () => {
     }
 }
 
+const connect = () => {
+    try {
+        mongo.connect(`mongodb+srv://${process.env.DBUSER}:${process.env.DBPASS}@cluster0.${process.env.DBHOST}.mongodb.net/reminders?retryWrites=true&w=majority`,
+        {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+        })
+        console.log('DB Connected Successfully!')
+    } catch (err) {
+        if(err) {
+            console.log(err.message)
+            process.exit(1)
+        }
+    }
+}
+
 const initial = async () => {
     if(isInitial) return
     try {
         addCommands()
+        connect()
         isInitial=true
     } catch (error) {
         console.log(error)
@@ -61,7 +79,7 @@ const initial = async () => {
 initial()
 
 client.once('ready', () => {
-    client.user.setActivity('WITH A CLOCK', {type:'PLAYING'})
+    client.user.setActivity('with temeralddd#1385', {type:'PLAYING'})
     console.log(`Da dang nhap duoi ten ${client.user.tag}!`)
     each10Second()
 })

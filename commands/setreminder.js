@@ -1,7 +1,6 @@
 const { Message, Permissions } = require('discord.js')
 const bot = require('wheat-better-cmd')
-const Database = require("@replit/database")
-const db = new Database()
+const db = require('../models/reminder')
 const moment = require('moment')
 
 const help = {
@@ -44,15 +43,16 @@ const run = async ({message,args}) => {
   //console.log(time.valueOf())
 
   //message.channel.send(`${days[time.day()]} abc`)
-  
-  await db.set(message.id, {
+
+  await new db({
+    id:message.id,
     server:message.guild.id,
     author:message.member.id,
     channel:message.channel.id,
     time:`${args[1]} mỗi ${days[time.day()]}`,
     next:time.valueOf(),
     content:content
-  })
+  }).save()
 
   const embed = await bot.wheatSampleEmbedGenerate()
 
