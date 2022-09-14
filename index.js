@@ -1,4 +1,4 @@
-requires('events').EventEmitter.prototype._maxListeners = Infinity
+require('events').EventEmitter.prototype._maxListeners = Infinity
 require('events').defaultMaxListeners = Infinity
 const { Collection, Client, Intents } = require('discord.js')
 require('dotenv').config()
