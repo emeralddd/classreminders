@@ -1,4 +1,4 @@
-require('events').EventEmitter.prototype._maxListeners = Infinity
+requires('events').EventEmitter.prototype._maxListeners = Infinity
 require('events').defaultMaxListeners = Infinity
 const { Collection, Client, Intents } = require('discord.js')
 require('dotenv').config()
@@ -19,7 +19,7 @@ app.get('/', function (req, res) {
     res.send('Hello World')
 })
 
-app.listen(8081)
+app.listen(process.env.PORT || 8081)
 
 moment.tz.setDefault("Asia/Ho_Chi_Minh")
 
