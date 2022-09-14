@@ -23,10 +23,10 @@ app.listen(8081)
 
 moment.tz.setDefault("Asia/Ho_Chi_Minh")
 
-const each10Second = async() => {
+const each2Minutes = async() => {
   setInterval(async() => {
     checkReminder(client)
-  },5000)
+  },120000)
 }
 
 const addCommands = () => {
@@ -81,7 +81,7 @@ initial()
 client.once('ready', () => {
     client.user.setActivity('with temeralddd#1385', {type:'PLAYING'})
     console.log(`Da dang nhap duoi ten ${client.user.tag}!`)
-    each10Second()
+    each2Minutes()
 })
 
 client.on('messageCreate', async (message) => {
