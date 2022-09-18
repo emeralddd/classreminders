@@ -24,7 +24,7 @@ const run = async ({message,args}) => {
     return
   }
   
-  const tmp = await db.findOneAndDelete({
+  const tmp = await db.findOneAndRemove({
     id:args[1]
   })
 
