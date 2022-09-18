@@ -23,7 +23,11 @@ const run = async ({message,args}) => {
     await bot.wheatSendErrorMessage(message,`Chưa nhập ID`)
     return
   }
-  const tmp = await db.findOneAndDelete(args[1])
+  
+  const tmp = await db.findOneAndDelete({
+    id:args[1]
+  })
+
   if(!tmp) {
     await bot.wheatSendErrorMessage(message,`ID không tồn tại`)
     return
