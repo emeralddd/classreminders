@@ -1,4 +1,4 @@
-const { Message, Permissions } = require('discord.js')
+const { Message, PermissionsBitField } = require('discord.js')
 const bot = require('wheat-better-cmd')
 const db = require('../models/reminder')
 
@@ -13,7 +13,7 @@ const help = {
  */
 
 const run = async ({message,args}) => {
-  if(!message.member.permissions.has(Permissions.FLAGS.ADMINISTRATOR)&&!message.member.permissions.has(Permissions.FLAGS.MANAGE_GUILD)) {
+  if(!message.member.permissions.has(PermissionsBitField.Flags.Administrator)&&!message.member.permissions.has(PermissionsBitField.Flags.ManageGuild)) {
     await bot.wheatSendErrorMessage(message,`Không có đủ quyền để thực hiện!`)
     return
   }

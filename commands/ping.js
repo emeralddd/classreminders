@@ -12,7 +12,7 @@ const help = {
  */
 
 const run = async ({message}) => {
-    const embed = await bot.wheatSampleEmbedGenerate()
+    const embed = bot.wheatSampleEmbedGenerate()
     embed.setDescription(`**Pong! in ${new Date().getTime() - message.createdTimestamp} miliseconds!**`)
     await bot.wheatEmbedSend(message,[embed])
 }

@@ -1,6 +1,6 @@
 require('events').EventEmitter.prototype._maxListeners = Infinity
 require('events').defaultMaxListeners = Infinity
-const { Collection, Client, Intents } = require('discord.js')
+const { Collection, Client, GatewayIntentBits, ActivityType, Events } = require('discord.js')
 require('dotenv').config()
 const express = require('express')
 const { readdirSync } = require('fs')
@@ -8,7 +8,8 @@ const moment = require('moment-timezone')
 const checkReminder = require('./modules/checkReminder.js')
 const mongo = require('mongoose')
 
-const client = new Client({intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MEMBERS]})
+const client = new Client({intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.GuildMembers, GatewayIntentBits.MessageContent]})
+
 let commandsList = new Collection()
 let aliasesList = new Collection()
 let isInitial = false
@@ -79,7 +80,13 @@ const initial = async () => {
 initial()
 
 client.once('ready', () => {
-    client.user.setActivity('with temeralddd#1385', {type:'PLAYING'})
+    client.user.setPresence({
+        activities:[{
+            name: 'with temeralddd#1385',
+            type: ActivityType.Playing
+        }],
+        status:'online'
+    })
     console.log(`Da dang nhap duoi ten ${client.user.tag}!`)
     each2Minutes()
 })

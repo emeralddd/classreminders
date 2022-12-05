@@ -7,7 +7,7 @@ const bot = require('wheat-better-cmd')
 */
 
 const alert = async (client,val) => {
-  const embed = await bot.wheatSampleEmbedGenerate()
+  const embed = bot.wheatSampleEmbedGenerate()
   embed.setTitle(`Bạn có một lịch đã được hẹn!`)
   embed.setDescription(val.content)
   const sv = client.guilds.cache.get(val.server)
