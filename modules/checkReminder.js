@@ -17,6 +17,7 @@ const alert = async (client,val) => {
   if(ch) ch.send({content:`@everyone`,embeds:[embed]})
 
   const us = await client.users.fetch(val.author)
+//   console.log('abc')
   if(us) await us.send({embeds:[embed]})
 }
 
@@ -27,9 +28,8 @@ module.exports = async (client) => {
 
     for(const i of lists) {
         if(i.next < now) {
-            alert(client,i)
-            //val.next+=10000
-            i.next+=604800000
+            if(now-i.next<=36000000) alert(client,i)
+            while(i.next<now) i.next+=604800000
             await i.save()
         }
     }
